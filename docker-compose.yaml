@@ -1,0 +1,43 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.server
+    image: adrientorris/hellomvp-frontend
+    ports:
+    - "5000:80"
+    depends_on:
+      - marketing
+      - projects
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+      DATA__CONNECTIONSTRING: "Server=DESKTOP-F56BUH3\\SQLEXPRESS;Database=OCC.G4;Trusted_Connection=True;User Id=sadev2;Password=dskj43ez3lkds9768;"
+  marketing:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.marketing
+    image: adrientorris/hellomvp_backend-marketing
+    depends_on:
+      - redis
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+      DATA__CONNECTIONSTRING: "Server=DESKTOP-F56BUH3\\SQLEXPRESS;Database=OCC.G4;Trusted_Connection=True;User Id=sadev2;Password=dskj43ez3lkds9768;"
+      SERVICE__REDIS: "redis:6379" 
+  projects:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.projects
+    image: adrientorris/hellomvp_backend-projects
+    depends_on:
+      - redis
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+      DATA__CONNECTIONSTRING: "Server=DESKTOP-F56BUH3\\SQLEXPRESS;Database=OCC.G4;Trusted_Connection=True;User Id=sadev2;Password=dskj43ez3lkds9768;"
+      SERVICE__REDIS: "redis:6379" 
+  redis:
+    image: redis
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+    - "9411:9411"

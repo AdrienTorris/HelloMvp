@@ -1,0 +1,32 @@
+﻿@page "/"
+@inject HttpClient HttpClient
+
+<h1>HelloMvp</h1>
+
+@if(projects!= null && this.projects.Any())
+{
+    <ul>
+        @foreach(var project in this.projects)
+        {
+            <li>
+                id: @project.Id
+                <br />@project.Title
+                <br />@project.ShortDescription
+                <br />@project.Inserted
+            </li>
+        }
+    </ul>
+}else{
+    <i>No project.</i>
+}
+
+@code {
+
+    private List<Project> projects;
+
+    protected async override Task OnInitializedAsync()
+    {
+        this.projects = await HttpClient.GetJsonAsync<List<Project>>("projects");
+    }
+
+}

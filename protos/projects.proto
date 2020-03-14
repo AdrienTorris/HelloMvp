@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "HelloMvp.ProjectService";
+
+package projects;
+
+service ProjectService {
+  rpc GetProjects (GetProjectsRequest) returns (GetProjectsReply);
+}
+
+message GetProjectsRequest {
+  int32 pageNumber = 1;
+  int32 pageSize = 2;
+}
+
+message GetProjectsReply {
+  int32 pageNumber = 1;
+  int32 pageSize = 2;
+  int32 totalCount = 3;
+  repeated Project projects = 4;
+}
+
+message Project{
+  int32 id = 1;
+  string ownerId = 2;
+  google.protobuf.Timestamp inserted = 3;
+  google.protobuf.Timestamp lastUpdated = 4;
+  string title = 5;
+  string shortDescription = 6;
+  string description = 7;
+}

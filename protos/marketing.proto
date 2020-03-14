@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "HelloMvp.MarketingService";
+
+package marketing;
+
+service MarketingService {
+  rpc SubscribeToNewsletter (SubscribeToNewsletterRequest) returns (SubscribeToNewsletterReply);
+  rpc ConfirmNewsletterSubscription (ConfirmNewsletterSubscriptionRequest) returns (ConfirmNewsletterSubscriptionReply);
+}
+
+message SubscribeToNewsletterRequest {
+  string email = 1;
+  string lang = 2;
+}
+
+message SubscribeToNewsletterReply {
+
+}
+
+message ConfirmNewsletterSubscriptionRequest {
+	string email = 1;
+	string token = 2;
+}
+
+message ConfirmNewsletterSubscriptionReply {
+
+}
+
+message NewsletterSubscription{
+    string email = 1;
+    google.protobuf.Timestamp inserted = 2;
+    google.protobuf.Timestamp confirmed = 3;
+    google.protobuf.Timestamp cancelled = 4;
+    google.protobuf.Timestamp lastUpdated = 5;
+	string language = 6;
+}

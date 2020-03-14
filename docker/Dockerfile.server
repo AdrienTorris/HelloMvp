@@ -1,0 +1,28 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY ./src/HelloMvpComponents/*.csproj ./src/HelloMvpComponents/
+COPY ./src/HelloMvp.Client/*.csproj ./src/HelloMvp.Client/
+COPY ./src/HelloMvp.ComponentsLibrary/*.csproj ./src/HelloMvp.ComponentsLibrary/
+COPY ./src/HelloMvp.Server/*.csproj ./src/HelloMvp.Server/
+COPY ./src/HelloMvp.Shared/*.csproj ./src/HelloMvp.Shared/
+COPY ./Directory.Build.props ./
+RUN dotnet restore src/HelloMvp.Server
+
+# Copy protos
+COPY ./protos ./protos
+
+# Copy everything else and build
+COPY ./src/HelloMvpComponents/ ./src/HelloMvpComponents/
+COPY ./src/HelloMvp.Client/ ./src/HelloMvp.Client/
+COPY ./src/HelloMvp.ComponentsLibrary/ ./src/HelloMvp.ComponentsLibrary/
+COPY ./src/HelloMvp.Server/ ./src/HelloMvp.Server/
+COPY ./src/HelloMvp.Shared/ ./src/HelloMvp.Shared/
+RUN dotnet publish ./src/HelloMvp.Server -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "HelloMvp.Server.dll"]
