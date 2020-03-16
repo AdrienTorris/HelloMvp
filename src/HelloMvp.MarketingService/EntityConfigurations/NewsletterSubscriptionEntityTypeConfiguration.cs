@@ -14,7 +14,7 @@ namespace HelloMvp.MarketingService.EntityConfigurations
             entityConfiguration.HasKey(o => o.Id);
 
             entityConfiguration.Property(o => o.Id)
-                .UseHiLo(nameof(NewsletterSubscription).ToLower() + "seq", MarketingContext.DEFAULT_SCHEMA);
+                .ForSqlServerUseSequenceHiLo(nameof(NewsletterSubscription).ToLower() + "seq", MarketingContext.DEFAULT_SCHEMA);
 
             entityConfiguration
                 .Property<string>("EmailAddress")

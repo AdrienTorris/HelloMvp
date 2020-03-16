@@ -12,7 +12,7 @@ services:
       - projects
     environment: 
       ASPNETCORE_ENVIRONMENT: Development
-      DATA__CONNECTIONSTRING: ""
+      DATA__CONNECTIONSTRING: "Server=DESKTOP-F56BUH3\\SQLEXPRESS;Database=OCC.G4;Trusted_Connection=True;User Id=sadev2;Password=dskj43ez3lkds9768;"
   marketing:
     build:
       context: .
@@ -22,7 +22,7 @@ services:
       - redis
     environment: 
       ASPNETCORE_ENVIRONMENT: Development
-      DATA__CONNECTIONSTRING: ""
+      DATA__CONNECTIONSTRING: "Server=DESKTOP-F56BUH3\\SQLEXPRESS;Database=OCC.G4;Trusted_Connection=True;User Id=sadev2;Password=dskj43ez3lkds9768;"
       SERVICE__REDIS: "redis:6379" 
   projects:
     build:
@@ -33,7 +33,7 @@ services:
       - redis
     environment: 
       ASPNETCORE_ENVIRONMENT: Development
-      DATA__CONNECTIONSTRING: ""
+      DATA__CONNECTIONSTRING: "Server=DESKTOP-F56BUH3\\SQLEXPRESS;Database=OCC.G4;Trusted_Connection=True;User Id=sadev2;Password=dskj43ez3lkds9768;"
       SERVICE__REDIS: "redis:6379" 
   redis:
     image: redis
